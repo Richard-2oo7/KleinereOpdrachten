@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Galgje</title>
+    <style> 
+    #streepjes{
+        font-size: 7vw;
+    }
+    .galgje{
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    #inputbox{
+        margin-top: 50px;
+        height: 50px;
+        width: 300px;
+        font-size: larger;
+        text-align: center;
+    }
+
+    .btn{
+        height: 30px;
+        width: 300px;
+    }
+
+    </style>
+</head>
+<body>
+    <div class="galgje">
+    <div id="streepjes"></div>
+    <input id ="inputbox"type="text" maxlength="1" required placeholder="kies een letter">
+    <button class = "btn"onclick="raadLetters()" type="submit">submit</button>
+    <div id="fouteLetterBox"></div>
+    <div id = "levens">levens 10</div>
+</div>
+
+
+    <script>
+        /* Ja ja ik weet het de code is niet leesbaar en niet duidelijk; maar daar gaat het niet op toch?*/
+        let streepjesbox = document.getElementById("streepjes");
+        let inputbox = document.getElementById("inputbox");
+        let foutenLetterBox = document.getElementById("fouteLetterBox");
+        let levensbox = document.getElementById("levens");
+        let levens = 10;
+                  
+        var woord = window.prompt("Bedenk een woord");
+        while(woord == undefined || woord == " " || woord == ""){
+            woord = window.prompt("Bedenk een woord");
+        }
+        var woordlength = woord.length;
+        let woordArrayCar = woord.split('');
+  
+        let streepjesArray =[];
+        let aantalstreepjes = woordArrayCar.length;
+        for(let i = 0; i< woordArrayCar.length; i++){
+            streepjesArray.push("_ ");
+        }
+
+        for(var i = 0; i < woordArrayCar.length; i++){
+            streepjesbox.innerHTML += streepjesArray[i];
+        }
+
+        function raadLetters(){
+            if(levens ===  0){
+                console.log("verloren");
+            return;
+            }
+           let geradenletter = inputbox.value;
+        //   console.log(geradenletter)
+           if(woordArrayCar.includes(geradenletter)){
+                for(var i = 0; i < streepjesArray.length; i++){
+                    if(geradenletter == woordArrayCar[i]){
+                        streepjesArray[i] = woordArrayCar[i]
+                    }
+                }
+                streepjesbox.innerHTML = '';
+                for(var i = 0; i < woordArrayCar.length; i++){
+                    streepjesbox.innerHTML += streepjesArray[i];
+            }
+           } else{
+            foutenLetterBox.innerHTML += geradenletter + " ";
+            levens--;
+            levensbox.innerHTML = "levens = " + levens;
+           }
+           if(!streepjesArray.includes("_ ")){
+            console.log("gewonnen");
+        }
+    }
+    </script>
+</body>
+</html>
